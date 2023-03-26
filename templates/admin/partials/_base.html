@@ -1,0 +1,51 @@
+{% load i18n static %}
+<!DOCTYPE html>
+{% get_current_language as LANGUAGE_CODE %}{% get_current_language_bidi as LANGUAGE_BIDI %}
+<html lang="{{ LANGUAGE_CODE|default:"en-us" }}" dir="{{ LANGUAGE_BIDI|yesno:'rtl,ltr,auto' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>{{ pageTitle }}</title>
+  <link rel="stylesheet" href="{% static "vendors/typicons.font/font/typicons.css" %}">
+  <link rel="stylesheet" href="{% static "vendors/css/vendor.bundle.base.css" %}">
+  <link rel="stylesheet" href="{% static "css/vertical-layout-light/style.css" %}">
+  <link rel="shortcut icon" href="{% static "images/favicon.png" %}" />
+  <link rel="stylesheet" href="{% block stylesheet %}{% static "admin/css/base.css" %}{% endblock %}">
+  {% block dark-mode-vars %}
+    <link rel="stylesheet" href="{% static "admin/css/dark_mode.css" %}">
+  {% endblock %}
+  {% if not is_popup and is_nav_sidebar_enabled %}
+    <link rel="stylesheet" href="{% static "admin/css/nav_sidebar.css" %}">
+    <script src="{% static 'admin/js/nav_sidebar.js' %}" defer></script>
+  {% endif %}
+  {% block extrastyle %}{% endblock %}
+  {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% block stylesheet_rtl %}{% static "admin/css/rtl.css" %}{% endblock %}">{% endif %}
+  {% block extrahead %}{% endblock %}
+  {% block responsive %}
+      <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+      <link rel="stylesheet" href="{% static "admin/css/responsive.css" %}">
+      {% if LANGUAGE_BIDI %}<link rel="stylesheet" href="{% static "admin/css/responsive_rtl.css" %}">{% endif %}
+  {% endblock %}
+  {% block blockbots %}<meta name="robots" content="NONE,NOARCHIVE">{% endblock %}
+</head>
+<body>
+ {% include "./_navbar.html" %}
+    <div class="container-fluid page-body-wrapper">
+        <div class="sidebar sidebar-offcanvas">
+            {% include "./_sidenav.html" %}
+        </div>
+        <div class="main-panel">
+            <div class="content-wrapper">
+                {% block content %}{% endblock %}
+            </div>
+            {% include "./_footer.html" %}
+        </div>
+    </div>
+  <script src="{% static "vendors/js/vendor.bundle.base.js" %}"></script>
+  <script src="{% static "js/off-canvas.js" %}"></script>
+  <script src="{% static "js/hoverable-collapse.js" %}"></script>
+  <script src="{% static "js/template.js" %}"></script>
+  <script src="{% static "js/settings.js" %}"></script>
+  <script src="{% static "js/todolist.js" %}"></script>
+</body>
+</html>
